@@ -1,0 +1,217 @@
+/* style.css Ч единый стиль интерфейса генератора */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: radial-gradient(circle at center, rgba(9,35,48,1) 0%, rgba(29,135,106,1) 100%);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1100px;
+  width: 95%;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  padding: 30px;
+  margin-top: 40px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  color: #aef5de;
+}
+
+.search-form,
+.create-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.search-form input[type="text"],
+.create-form input[type="text"],
+.create-form select {
+  flex: 1;
+  min-width: 180px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.search-form input::placeholder,
+.create-form input::placeholder {
+  color: #b0b0b0;
+}
+
+.create-form select {
+  appearance: none;
+}
+
+.create-form select option {
+  background: #092330;
+  color: #fff;
+}
+
+.create-form input:focus,
+.create-form select:focus {
+  outline: none;
+  border-color: #5df5cf;
+  background: rgba(255,255,255,0.1);
+}
+
+/*  нопки Ч единый стиль в зелЄной палитре сайта */
+button, .btn-green, .btn-blue, .btn-red {
+  border: none;
+  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  background: linear-gradient(90deg, #0E4C47 0%, #176C60 100%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Ч подсветка и лЄгкое подн€тие */
+button:hover, .btn-green:hover, .btn-blue:hover, .btn-red:hover {
+  background: linear-gradient(90deg, #176C60 0%, #1E8A77 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.35);
+}
+
+/* Active Ч эффект нажати€ */
+button:active, .btn-green:active, .btn-blue:active, .btn-red:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ‘окус Ч м€гкое свечение */
+button:focus-visible, .btn-green:focus-visible, .btn-blue:focus-visible, .btn-red:focus-visible {
+  outline: 2px solid #26d6a0;
+  outline-offset: 2px;
+}
+
+/* „екбокс */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #cceee0;
+  margin-right: auto;
+}
+
+/* „екбокс */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #cceee0;
+  margin-right: auto;
+}
+
+
+/* “аблица */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 12px;
+  text-align: center;
+}
+
+th {
+  background: rgba(0,0,0,0.4);
+  color: #aef5de;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+tr:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* Ќет данных */
+.no-data {
+  text-align: center;
+  color: #ddd;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+/* ¬сплывающие уведомлени€ */
+.flash-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.flash {
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  opacity: 1;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.flash.success {
+  background: #1e884d;
+}
+
+.flash.warning {
+  background: #b38a1e;
+}
+
+.flash.danger, .flash.error {
+  background: #b33939;
+}
+
+.flash.info {
+  background: #2076b9;
+}
+
+.flash.hide {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* јдаптивность */
+@media (max-width: 768px) {
+  .create-form input, .create-form select, .search-form input {
+    min-width: 100%;
+  }
+
+  .create-form, .search-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-green, .btn-blue, .btn-red {
+    width: 100%;
+    text-align: center;
+  }
+}

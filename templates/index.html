@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Генератор форматов</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Генератор форматов</h1>
+
+    <form action="{{ url_for('index') }}" method="get" class="search-form">
+      <input type="text" name="query" placeholder="Введите название формата или тыкайте найти..." value="{{ query }}">
+      <button type="submit">Найти</button>
+    </form>
+
+    <form action="{{ url_for('add_format') }}" method="post" class="create-form">
+      <input type="text" name="format_name" placeholder="Название формата" required>
+      <input type="text" name="width" placeholder="Ширина" required>
+      <input type="text" name="height" placeholder="Высота" required>
+
+      <select name="template_type">
+  <!-- Основные HTML шаблоны -->
+  <option value="default">Default</option>
+  <option value="Branding">Branding</option>
+  <option value="FloatingBillboard">Floating Billboard</option>
+  <option value="Show-up">Show-up</option>
+  <option value="Interscroller">Interscroller</option>
+  <option value="PopUp">Pop-up</option>
+  <option value="PopUpContent">Pop-up в контенте</option>
+  <option value="Fullscreen">Fullscreen</option>
+  <option value="Виртуальное письмо">Виртуальное письмо</option>
+
+  <!-- Дополнительные типы шаблонов (нестандартные, не HTML) -->
+  <option value="native">Native</option>
+  <option value="video">Video</option>
+  <option value="carousel">Carousel</option>
+</select>
+
+
+      <input type="text" name="platform" placeholder="Версия (desktop/Mobile)" required>
+      <input type="text" name="description" placeholder="Описание формата">
+      <input type="text" name="link" placeholder="Ссылка ([clickurl_1])">
+
+      <label class="checkbox">
+        <input type="checkbox" name="only_image"> Только PNG (без HTML)
+      </label>
+
+      <button type="submit" class="btn-green">Добавить формат</button>
+      <a href="{{ url_for('download_all') }}" class="btn-blue">Скачать все</a>
+    </form>
+
+    {% if formats %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Название</th>
+          <th>Размеры</th>
+          <th>Платформа</th>
+          <th>Тип</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in formats %}
+        <tr>
+          <td>{{ f[0] }}</td>
+          <td>{{ f[1] }}</td>
+          <td>{{ f[2] }}x{{ f[3] }}</td>
+          <td>{{ f[5] }}</td>
+          <td>{{ f[4] }}</td>
+          <td>
+            <a href="{{ url_for('download', format_id=f[0]) }}" class="btn-blue">Скачать</a>
+            <form action="{{ url_for('delete_format', format_id=f[0]) }}" method="post" style="display:inline;">
+              <button type="submit" class="btn-red">Удалить</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p class="no-data">Форматы не найдены. Создайте новый!</p>
+    {% endif %}
+  </div>
+
+  <!-- Всплывающие уведомления -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="flash-container">
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  <script>
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(el => el.classList.add('hide'));
+    }, 3500);
+  </script>
+  {% endif %}
+  {% endwith %}
+</body>
+</html>

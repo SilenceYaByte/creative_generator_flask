@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ format_name }}</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+    }
+
+    .background-container {
+      position: relative;
+      width: {{ width }};
+      height: {{ height }};
+      overflow: hidden;
+      background: #1d876a;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 10px;
+    }
+
+    .background-container::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: -10px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        ellipse 50% 100% at 50% 0%,
+        rgba(9, 35, 48, 1) 0%,
+        rgba(29, 135, 106, 0) 100%
+      );
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .content h1 {
+      margin: 0.2em 0;
+      font-size: clamp(12px, 2.5vw, 24px);
+    }
+
+    .content p {
+      margin: 0 0 0.3em;
+      font-size: clamp(10px, 1.8vw, 16px);
+      overflow-wrap: break-word;
+    }
+
+    .content a {
+      color: #90f0e5;
+      text-decoration: none;
+      opacity: 0.9;
+      font-size: clamp(9px, 1.6vw, 14px);
+    }
+
+    .content a:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="background-container" id="adContainer">
+    <div class="content">
+      {% block creative %}
+      <h1>{{ format_name }}</h1>
+      <p>{{ description }}</p>
+      <a href="{{ link }}" target="_blank">{{ format_name }}</a>
+      {% endblock %}
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      function fitText() {
+        var container = document.getElementById('adContainer');
+        var inner = container ? container.querySelector('.content') : null;
+        if (!container || !inner) return;
+        var size = 18;
+        inner.style.fontSize = size + 'px';
+        while (size > 6) {
+          if (container.scrollHeight <= container.clientHeight &&
+              container.scrollWidth <= container.clientWidth) {
+            break;
+          }
+          size -= 0.5;
+          inner.style.fontSize = size + 'px';
+        }
+      }
+      window.addEventListener('load', function () {
+        fitText();
+        setTimeout(fitText, 100);
+        document.body.setAttribute('data-rendered', '1');
+      });
+      window.__fitText = fitText;
+    })();
+  </script>
+</body>
+</html>
